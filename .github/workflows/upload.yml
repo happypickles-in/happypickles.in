@@ -4,12 +4,18 @@ on:
   push:
     branches:
       - 'main'
+    paths-ignore:
+      - 'ci/**'
+      - '.github/**'
+      - 'LICENSE'
+      - '.gitignore'
 jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
       contents: read
       id-token: write
+    environment: ${{ vars.ENVIRONMENT_STAGE }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v6.0.1
