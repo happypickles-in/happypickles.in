@@ -1,0 +1,14 @@
+{
+  "name":"upload-objects",
+  "license": "MIT",
+  "main":"./index.mjs",
+  "version": "1.0.0",
+  "type":"module",
+  "exports":"./index.mjs"
+  "dependencies":{
+    "@actions/github":"",
+    "@actions/core":"",
+    "@aws-sdk/client-s3":"",
+    "@aws-sdk/lib-storage":""
+  }
+}
