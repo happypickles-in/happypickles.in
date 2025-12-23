@@ -29,7 +29,7 @@ jobs:
           role-session-name: ${{ github.run_id }}-${{ github.job }}-${{ github.run_attempt }}
           aws-region: ${{ vars.AWS_REGION }}
       - name: Install dependencies and upload
-        working-directory: ./ci
+        working-directory: ./.github/ci/upload
         run: npm install
       - name: Trigger Upload Script
-        run: node ./ci/upload.mjs
+        run: node ./.github/ci/upload/index.mjs
