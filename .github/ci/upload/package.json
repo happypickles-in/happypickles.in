@@ -4,7 +4,7 @@
   "main":"./index.mjs",
   "version": "1.0.0",
   "type":"module",
-  "exports":"./index.mjs"
+  "exports":"./index.mjs",
   "dependencies":{
     "@actions/github":"",
     "@actions/core":"",
