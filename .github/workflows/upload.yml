@@ -15,7 +15,6 @@ jobs:
     permissions:
       contents: read
       id-token: write
-    environment: ${{ vars.ENVIRONMENT_STAGE }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v6.0.1
