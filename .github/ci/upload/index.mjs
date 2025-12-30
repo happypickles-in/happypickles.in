@@ -7,7 +7,7 @@ import Cloudflare from "cloudflare";
 import {createReadStream} from "node:fs";
 
 const context = github.context;
-console.log(context);
+console.log(JSON.stringify(context,null,4));
 
 const cloudflare  = new Cloudflare({
   apiToken: process.env['CLOUDFLARE_API_TOKEN']
@@ -29,16 +29,16 @@ const files = [];
 upload_list.push(new Upload({
   client:s3,
   params: {
-  Bucket:process.env["S3_BUCKET_NAME"],
+    Bucket:process.env["S3_BUCKET_NAME"],
     Key:"LICENSE",
     Body:createReadStream("./../../../LICENSE"),
-  ContentType:"text/plain"
+    ContentType:"text/plain"
   }
 }).done());
 
 const cache = await cloudflare.cache.purge(
   { 
-    zone_id:process.env["CLOUDFLARE_ZONE_ID"],
+    "zone_id":process.env["CLOUDFLARE_ZONE_ID"],
     "body":{
       "files": [
         "http://happypickles.in/LICENSE"
@@ -46,5 +46,5 @@ const cache = await cloudflare.cache.purge(
     }
   }
 );
-
+console.log(cache);
 await promise.all(upload_list);
