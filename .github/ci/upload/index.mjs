@@ -45,4 +45,4 @@ const cache = await cloudflare.cache.purge(
   }
 );
 console.log(cache);
-await promise.all(upload_list);
+await Promise.all(upload_list);
