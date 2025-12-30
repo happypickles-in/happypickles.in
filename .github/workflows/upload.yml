@@ -34,6 +34,6 @@ jobs:
         working-directory: ./.github/ci/upload/
         run: node ./index.mjs
         env:
-         CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-         CLOUDFLARE_ZONE_ID: ${{ vars.CLOUDFLARE_ZONE_ID }}
-         CLOUDFLARE_ACCOUNT_ID: ${{vars.CLOUDFLARE_ACCOUNT_ID}}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ZONE_ID: ${{ vars.CLOUDFLARE_ZONE_ID }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
