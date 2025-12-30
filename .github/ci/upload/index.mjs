@@ -31,10 +31,10 @@ upload_list.push(Upload({
   params: {
   Bucket:process.env["S3_BUCKET_NAME"],
     Key:"LICENSE",
-    Body:createReadStream("./../../../LICENSE");
+    Body:createReadStream("./../../../LICENSE"),
   ContentType:"text/plain"
   }
-}).done())
+}).done());
 
 const cache = await cloudflare.cache.purge(
   { 
