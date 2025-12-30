@@ -32,3 +32,4 @@ jobs:
         run: npm install
       - name: Trigger Upload Script
         run: node ./.github/ci/upload/index.mjs
+        working-directory: ./
