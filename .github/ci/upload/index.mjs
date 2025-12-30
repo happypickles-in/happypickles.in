@@ -1,4 +1,4 @@
-import * as github from '@actions/github';
+import { Octokit } from "@actions/github";
 import * as core from '@actions/core';
 import {S3Client} from "@aws-sdk/client-s3";
 import {Upload} from "@aws-sdk/lib-storage";
@@ -22,7 +22,7 @@ const s3 = new S3Client({
   }
 });
 
-const octokit = github.getOctokit(process.env["GITHUB_TOKEN"]);
+const octokit = new Octokit({ auth: process.env["GITHUB_TOKEN"] });
 
 const upload_list = [];
 const files = [];
