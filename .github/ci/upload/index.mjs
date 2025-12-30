@@ -39,11 +39,9 @@ upload_list.push(new Upload({
 const cache = await cloudflare.cache.purge(
   { 
     "zone_id":process.env["CLOUDFLARE_ZONE_ID"],
-    "body":{
-      "files": [
-        "http://happypickles.in/LICENSE"
-      ]
-    }
+    "files": [
+      "http://happypickles.in/LICENSE"
+    ]
   }
 );
 console.log(cache);
