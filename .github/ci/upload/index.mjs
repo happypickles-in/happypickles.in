@@ -26,7 +26,7 @@ const octokit = github.getOctokit(process.env["GITHUB_TOKEN"]);
 
 const upload_list = [];
 const files = [];
-upload_list.push(Upload({
+upload_list.push(new Upload({
   client:s3,
   params: {
   Bucket:process.env["S3_BUCKET_NAME"],
