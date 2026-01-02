@@ -7,8 +7,13 @@ import Cloudflare from "cloudflare";
 import {createReadStream} from "node:fs";
 
 const context = github.context;
-console.log(JSON.stringify(context,null,4));
 
+const octokit = github.getOctokit(process.env["GITHUB_TOKEN"]);
+
+const changes = process.env['GIT_CHANGES'] || "";
+
+console.log(changes);
+/**
 const cloudflare  = new Cloudflare({
   apiToken: process.env['CLOUDFLARE_API_TOKEN']
 });
@@ -21,8 +26,6 @@ const s3 = new S3Client({
     sessionToken: process.env["AWS_SESSION_TOKEN"]
   }
 });
-
-const octokit = github.getOctokit(process.env["GITHUB_TOKEN"]);
 
 const upload_list = [];
 const files = [];
@@ -46,3 +49,6 @@ const cache = await cloudflare.cache.purge(
 );
 
 await Promise.all(upload_list);
+*/
+
+console.log("Finished upload process.");
