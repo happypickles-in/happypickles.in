@@ -71,6 +71,14 @@ s3_puts = null;
 let cloudflare = new Cloudflare({
     apiToken: process.env['CLOUDFLARE_API_TOKEN']
 });
+
+if (cache_list.length === 0) {
+    core.info("No files to purge from Cloudflare cache.");
+    cloudflare = null;
+    cache_list = null;
+    return;
+}
+
 let cache = await cloudflare.cache.purge({
     "zone_id": process.env["CLOUDFLARE_ZONE_ID"],
     "files": cache_list
