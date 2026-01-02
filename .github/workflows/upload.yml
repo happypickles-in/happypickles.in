@@ -26,13 +26,13 @@ jobs:
         run: |
           {
             echo "GIT_DELETE<<EOF"
-            git diff --names-only --diff-filter=D --no-renames --ignore-submodules HEAD~1 HEAD
+            git diff --name-only --diff-filter=D --no-renames --ignore-submodules HEAD~1 HEAD
             echo "EOF"
           } >> "$GITHUB_OUTPUT"
 
           {
             echo "GIT_PUTS<<EOF"
-            git diff --names-only --diff-filter=AMT --no-renames --ignore-submodules HEAD~1 HEAD
+            git diff --name-only --diff-filter=AMT --no-renames --ignore-submodules HEAD~1 HEAD
             echo "EOF"
           } >> "$GITHUB_OUTPUT"
 
