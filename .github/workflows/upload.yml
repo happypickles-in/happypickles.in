@@ -25,7 +25,7 @@ jobs:
         shell: bash
         run: |
           {
-            echo "GIT_DELETE<<EOF"
+            echo "GIT_DELETES<<EOF"
             git diff --name-only --diff-filter=D --no-renames --ignore-submodules HEAD~1 HEAD
             echo "EOF"
           } >> "$GITHUB_OUTPUT"
@@ -64,6 +64,6 @@ jobs:
           CLOUDFLARE_ZONE_ID: ${{ vars.CLOUDFLARE_ZONE_ID }}
           CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GIT_DELETES: ${{ steps.git-changes.outputs.GIT_DELETE }}
-          GIT_PUT: ${{ steps.git-changes.outputs.GIT_PUTS }}
+          GIT_DELETES: ${{ steps.git-changes.outputs.GIT_DELETES }}
+          GIT_PUTS: ${{ steps.git-changes.outputs.GIT_PUTS }}
           SITE_DOMAINS: ${{ vars.SITE_DOMAINS }}
