@@ -17,7 +17,7 @@ const s3 = new S3Client({
     }
 });
 let deletes = process.env['GIT_DELETES'] || "";
-const cache_list = [];
+let cache_list = [];
 let s3_deletes = [];
 for (let file of deletes.split("\n")) {
     file = file.trim();
@@ -40,7 +40,7 @@ deletes = null;
 await Promise.all(s3_deletes);
 s3_deletes = null;
 let uploads = process.env['GIT_PUTS'] || "";
-const s3_puts = [];
+let s3_puts = [];
 for (let file of uploads.split("\n")) {
     file = file.trim();
     if (file.trim().length === 0) {
@@ -68,11 +68,15 @@ for (let file of uploads.split("\n")) {
 uploads = null;
 await Promise.all(s3_puts);
 s3_puts = null;
-const cloudflare = new Cloudflare({
+let cloudflare = new Cloudflare({
     apiToken: process.env['CLOUDFLARE_API_TOKEN']
 });
-const cache = await cloudflare.cache.purge({
+let cache = await cloudflare.cache.purge({
     "zone_id": process.env["CLOUDFLARE_ZONE_ID"],
     "files": cache_list
 });
+
+cloudflare = null;
+cache = null;
 core.info(`Purged ${cache_list.length} files from Cloudflare cache.`);
+cache_list = null;
