@@ -1,2 +1,1 @@
-console.log("my code");
-console.log("my codes");
+console.log("my codees");
