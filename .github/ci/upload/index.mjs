@@ -77,15 +77,13 @@ if (cache_list.length === 0) {
     core.info("No files to purge from Cloudflare cache.");
     cloudflare = null;
     cache_list = null;
-    return;
-}
-
-let cache = await cloudflare.cache.purge({
-    "zone_id": process.env["CLOUDFLARE_ZONE_ID"],
-    "files": cache_list
-});
-
-cloudflare = null;
-cache = null;
-core.info(`Purged ${cache_list.length} files from Cloudflare cache.`);
-cache_list = null;
+}else{
+    let cache = await cloudflare.cache.purge({
+        "zone_id": process.env["CLOUDFLARE_ZONE_ID"],
+        "files": cache_list
+    });
+    cloudflare = null;
+    cache = null;
+    core.info(`Purged ${cache_list.length} files from Cloudflare cache.`);
+    cache_list = null;
+};
