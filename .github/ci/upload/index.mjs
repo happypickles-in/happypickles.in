@@ -5,6 +5,7 @@ import {Upload} from "@aws-sdk/lib-storage";
 import Cloudflare from "cloudflare";
 import {brotliParamsForMime} from "./brotli.mjs";
 const context = github.context;
+console.log(context);
 const octokit = github.getOctokit(process.env["GITHUB_TOKEN"]);
 const bucket = process.env["S3_BUCKET_NAME"];
 const domains = process.env["SITE_DOMAINS"].split(",");
