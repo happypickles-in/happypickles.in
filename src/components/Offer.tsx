@@ -1,10 +1,11 @@
 import { Gift, Check, Clock, ArrowRight } from 'lucide-react';
 import products from '../data/products';
 import { Product } from '../types/product';
-import { useCart } from './CartContext';
+import { useCart } from '../contexts/CartContext';
 
 export default function Offer() {
-  const { addOne, toggleCart } = useCart();
+  const { addOne, openCart } = useCart();
+
 
   // derive best sellers (top 3 by orders)
   const bestSellers: Product[] = [...products]
@@ -25,7 +26,7 @@ export default function Offer() {
     bestSellers.forEach(product => {
       addOne(product); // add 1 qty of each
     });
-    toggleCart(); // open cart
+    openCart(); // always open + /cart
   };
 
   return (

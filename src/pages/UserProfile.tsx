@@ -2,7 +2,7 @@ import {
     Truck,
     Package,
     Bookmark,
-    Edit3,
+    Pen,
     Plus,
     Home,
     Briefcase,
@@ -17,18 +17,12 @@ import AdressModal from '../components/AdressModal';
 const BRAND = '#E67E22';
 
 export default function UserProfile() {
-    const tempaddresses = [
-        { id: 1, label: 'Home', address: '12-4-56, Main Road, Rajahmundry' },
-        { id: 2, label: 'Work', address: 'IT Park, Madhapur, Hyderabad' },
-        { id: 3, label: 'Other', address: 'Near Bus Stand, Kakinada' },
-    ];
-
     const {
         profile,
         addresses,
+        setDefaultAddress,
         orders,
         wishlist,
-        setDefaultAddress,
     } = useUser();
 
     const [editProfileOpen, setEditProfileOpen] = useState(false);
@@ -63,7 +57,7 @@ export default function UserProfile() {
                     onClick={() => setEditProfileOpen(true)}
                     className="p-2 rounded-lg hover:bg-[#F9F9F9] text-[#E67E22]"
                 >
-                    <Edit3 size={18} />
+                    <Pen size={18} />
                 </button>
             </div>
 
@@ -100,38 +94,76 @@ export default function UserProfile() {
             <section className="bg-white rounded-2xl border p-5">
                 <div className="flex items-center justify-between mb-4">
                     <h3 className="font-semibold">Saved Addresses</h3>
-                    <button className="flex items-center gap-1 text-sm text-[#E67E22] font-medium">
-                        <Plus size={16} /> Add
+                    <button
+                        onClick={() => setAddressModalOpen(true)}
+                        className="flex items-center gap-1 text-sm text-[#E67E22] font-medium"
+                    ><Plus size={16} /> Add
                     </button>
                 </div>
 
                 <div className="grid md:grid-cols-3 gap-4">
-                    {tempaddresses.map((a) => (
+                    {addresses.map((a) => (
                         <div
                             key={a.id}
-                            className="group border rounded-xl p-4 space-y-2 hover:border-[#E67E22]/40 transition"
+                            className={`relative group rounded-2xl border bg-white p-4 transition-all
+            hover:shadow-md hover:border-[#E67E22]/40`}
                         >
-                            <div className="flex items-center justify-between">
-                                <div className="flex items-center gap-2 font-medium">
+                            {/* DEFAULT BUTTON */}
+                            <button
+                                onClick={() => setDefaultAddress(a.id)}
+                                className={`absolute top-3 right-3 text-[11px] px-3 py-1 rounded-full font-medium transition
+                ${a.isDefault
+                                        ? 'bg-[#E67E22] text-white'
+                                        : 'border border-[#E67E22] text-[#E67E22] hover:bg-[#E67E22]/10'
+                                    }`}
+                            >
+                                {a.isDefault ? 'Default' : 'Set Default'}
+                            </button>
+
+                            {/* HEADER */}
+                            <div className="flex items-center justify-between mb-2">
+                                <div className="flex items-center gap-2 font-semibold text-sm">
                                     {a.label === 'Home' && <Home size={18} color={BRAND} />}
                                     {a.label === 'Work' && <Briefcase size={18} color={BRAND} />}
                                     {a.label === 'Other' && <Navigation size={18} color={BRAND} />}
-                                    {a.label}
+                                    <span>{a.label}</span>
                                 </div>
 
-                                <Edit3
+                                <Pen
                                     size={16}
-                                    className="text-[#E67E22] opacity-0 group-hover:opacity-100 transition"
+                                    onClick={() => {
+                                        setAddressModalOpen(true);
+                                    }}
+                                    className="text-[#E67E22] cursor-pointer opacity-0 group-hover:opacity-100 transition"
                                 />
                             </div>
 
+                            {/* ADDRESS BODY */}
                             <div className="text-sm text-[#6B5A4A] leading-relaxed">
-                                {a.address}
+                                {a ? (
+                                    <p className="mt-1">
+                                        <span className="font-medium text-[#3D2F25]">
+                                            {a.name}
+                                        </span>
+                                        <span className="text-xs text-gray-500">
+                                            {' '}• {a.phone}
+                                        </span>
+                                        <br />
+                                        <span className="block mt-1">
+                                            {a.house},
+                                            {a.mandal ? ` ${a.mandal},` : ''}
+                                            {' '}{a.district}, {a.state} – {a.pincode}
+                                        </span>
+                                    </p>
+                                ) : (
+                                    <p className="text-sm text-gray-400">No address</p>
+                                )}
                             </div>
                         </div>
                     ))}
                 </div>
-            </section>
+
+            </section >
 
             <EditProfileModal
                 open={editProfileOpen}
@@ -142,6 +174,6 @@ export default function UserProfile() {
                 open={addressModalOpen}
                 onClose={() => setAddressModalOpen(false)}
             />
-        </div>
+        </div >
     );
 }

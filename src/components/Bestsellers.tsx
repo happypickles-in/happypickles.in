@@ -1,7 +1,7 @@
 import { Flame } from 'lucide-react';
 import { useState } from 'react';
 import ProductCard, { Product } from './ProductCard';
-import { useCart } from './CartContext';
+import { useCart } from '../contexts/CartContext';
 
 import products from '../data/products';
 

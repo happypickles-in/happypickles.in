@@ -1,5 +1,6 @@
+import { useUser } from '../contexts/UserContext';
 import {
-    Heart,
+    Bookmark,
     ShoppingCart,
     Star,
     Leaf,
@@ -57,6 +58,19 @@ export default function ProductCard({
         (cat) => cat.value === product.category
     );
 
+    const { addToWishlist, removeFromWishlist, isInWishlist } = useUser();
+
+    const liked = isInWishlist(product.id);
+
+    const toggleWishlist = () => {
+        if (liked) {
+            removeFromWishlist(product.id);
+        } else {
+            addToWishlist(product.id);
+        }
+    };
+
+
     return (
         <div className="bg-white rounded-xl md:rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 group overflow-hidden">
             {/* IMAGE */}
@@ -68,7 +82,7 @@ export default function ProductCard({
                 />
 
                 {categoryData && (
-                    <div className="absolute bottom-2 md:bottom-4 left-2 md:left-4">
+                    <div className="absolute bottom-1 md:bottom-2 left-1 md:left-2">
                         <span
                             className={`w-6 h-6 rounded-full flex items-center justify-center ${categoryData.iconBg}`}
                         >
@@ -77,14 +91,27 @@ export default function ProductCard({
                     </div>
                 )}
 
-                <button className="absolute bottom-2 md:bottom-4 right-2 md:right-4 w-6 h-6 flex items-center justify-center">
-                    <Heart className="w-6 h-6 text-white" />
+                <button
+                    onClick={toggleWishlist}
+                    className="absolute bottom-1 md:bottom-2 right-1 md:right-1 w-6 h-6
+        flex items-center justify-center rounded-full
+        active:scale-90 transition-transform"
+                >
+                    <Bookmark
+                        className={`relative z-10 w-6 h-6 transition-all duration-300
+            ease-[cubic-bezier(0.34,1.56,0.64,1)]
+            ${liked
+                                ? 'fill-[#E67E22] text-[#E67E22] scale-110'
+                                : 'fill-transparent text-white'
+                            }`}
+                    />
                 </button>
+
             </div>
 
             {/* CONTENT */}
-            <div className="w-full p-2 lg:p-4 h-full">
-                <div>
+            <div className="w-full h-full py-2 lg:py-4">
+                <div className='px-2 lg:px-4'>
                     <MarqueeText text={product.name} />
                     {product.teluguName && (
                         <MarqueeText
@@ -94,7 +121,7 @@ export default function ProductCard({
                     )}
                 </div>
 
-                <div className="w-full flex flex-col flex-wrap items-center justify-items-center gap-2">
+                <div className="w-full px-2 lg:px-4 flex flex-col flex-wrap items-center justify-items-center gap-2">
 
                     <div className='w-full flex flex-row justify-around items-center'>
                         {/* RATING */}
@@ -122,48 +149,49 @@ export default function ProductCard({
                         </div>
                     </div>
 
-                    <div className='flex flex-row gap-2'>
-                        {/* ADD / QTY */}
-                        <div className="flex justify-end">
-                            {quantity > 0 ? (
-                                <div className="h-7 md:h-9 w-[50px] md:w-[80px] rounded-xl border border-[#E8E0D6] grid grid-cols-3 items-center overflow-hidden">
-                                    <button className="h-full text-lg qty-minus-anim" onClick={onDecrease}>
-                                        −
-                                    </button>
+                </div>
 
-                                    <div className="relative h-5 overflow-hidden text-xs md:text-sm font-semibold text-center">
-                                        <span
-                                            key={`${product.id}-${quantity}`}
-                                            className={`absolute inset-0 ${animDir === 'up' ? 'qty-up' : 'qty-down'
-                                                }`}
-                                        >
-                                            {quantity}
-                                        </span>
-                                    </div>
-
-                                    <button className="h-full text-lg qty-plus-anim" onClick={onIncrease}>
-                                        +
-                                    </button>
-                                </div>
-                            ) : (
-                                <button
-                                    onClick={onAdd}
-                                    className="h-7 md:h-9 w-[50px] md:w-[80px] rounded-xl bg-[#E67E22] text-white text-xs md:text-sm font-semibold flex items-center justify-center gap-1"
-                                >
-                                    Add <span className='hidden md:flex flex-row items-center'>to <ShoppingCart className="w-4 h-4" /></span>
+                <div className='flex flex-row gap-1 md:gap-2 justify-center'>
+                    {/* ADD / QTY */}
+                    <div className="flex justify-end">
+                        {quantity > 0 ? (
+                            <div className="h-7 md:h-9 w-[55px] md:w-[80px] rounded-xl border border-[#E8E0D6] grid grid-cols-3 items-center overflow-hidden">
+                                <button className="h-full text-lg qty-minus-anim" onClick={onDecrease}>
+                                    −
                                 </button>
-                            )}
-                        </div>
 
-                        {/* BUY NOW */}
-                        <div className="flex justify-end">
+                                <div className="relative h-5 overflow-hidden text-xs md:text-sm font-semibold text-center">
+                                    <span
+                                        key={`${product.id}-${quantity}`}
+                                        className={`absolute inset-0 ${animDir === 'up' ? 'qty-up' : 'qty-down'
+                                            }`}
+                                    >
+                                        {quantity}
+                                    </span>
+                                </div>
+
+                                <button className="h-full text-lg qty-plus-anim" onClick={onIncrease}>
+                                    +
+                                </button>
+                            </div>
+                        ) : (
                             <button
-                                onClick={onBuyNow}
-                                className="h-7 md:h-9 w-[50px] md:w-[80px] rounded-xl border border-[#E67E22] text-[#E67E22] text-xs md:text-sm font-semibold flex items-center justify-center gap-1"
+                                onClick={onAdd}
+                                className="h-7 md:h-9 w-[55px] md:w-[80px] rounded-xl bg-[#E67E22] text-white text-xs md:text-sm font-semibold flex items-center justify-center gap-1"
                             >
-                                Buy <span className='hidden md:flex flex-row items-center'>Now</span>
+                                Add <span className='hidden md:flex flex-row items-center'>to <ShoppingCart className="w-4 h-4" /></span>
                             </button>
-                        </div>
+                        )}
+                    </div>
+
+                    {/* BUY NOW */}
+                    <div className="flex justify-end">
+                        <button
+                            onClick={onBuyNow}
+                            className="h-7 md:h-9 w-[55px] md:w-[80px] rounded-xl border border-[#E67E22] text-[#E67E22] text-xs md:text-sm font-semibold flex items-center justify-center gap-1"
+                        >
+                            Buy <span className='hidden md:flex flex-row items-center'>Now</span>
+                        </button>
                     </div>
                 </div>
             </div>

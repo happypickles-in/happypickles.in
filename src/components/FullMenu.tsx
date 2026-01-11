@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import ProductCard, { Product } from './ProductCard';
 import FilterDropdown from './FilterDropdown';
-import { useCart } from './CartContext';
+import { useCart } from '../contexts/CartContext';
 import {
   LayoutGrid, Leaf, Drumstick, Sparkles, Cookie, CakeSlice,
   ArrowUp, ArrowDown, ArrowUpAZ, ArrowDownAZ,
